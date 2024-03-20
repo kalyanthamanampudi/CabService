@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	<util:properties id="sqlquery">
+		<prop key="get_userByname">Select * from users where name = :name</prop>
+		<prop key="add_user">Insert into
+			users(name,password,roles)values(:name,:password,:roles)
+		</prop>
+		<prop key="get_allcabs">Select * from cabs</prop>
+		<prop key="get_allavailablecabs">Select * from cabs where availability = 'Y'</prop>
+		<prop key="add_customer">Insert into
+			customers(name,phone,email)values(:name,:phone,:email)
+		</prop>
+		<prop key="update_cabs">update cabs set availability = 'N' where cab_id =
+			:cab_id
+		</prop>
+		<prop key="update_Customer">update customers set cab_id = :cab_id where email =
+			:name
+		</prop>
+		<prop key="update_cabsunbook">update cabs set availability = 'Y' where cab_id =
+			(Select cab_id from customers where name = :name)
+		</prop>
+		<prop key="update_customerunbook">update customers set cab_id = :null where name = :name
+		</prop>
+		<prop key="add_cab">Insert into
+			cabs(driver,availability)values(:driver,:availability)
+		</prop>
+		<prop key="delete_cab">Delete from
+			cabs where cab_id = :cab_id;
+		</prop>
+		<prop key="delete_user">delete from users where name = (select email from
+			customers
+			where name = :name)
+		</prop>
+		<prop key="delete_customer">delete from customers where name = :name </prop>
+		<prop key="check_cabbooked">Select cab_id from customers where name = :name</prop>
+
+	</util:properties>
+</beans>
